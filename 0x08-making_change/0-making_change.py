@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+Module to determine the fewest number of coins needed to meet a given amount.
+"""
+
 def makeChange(coins, total):
     """
     Determines the fewest number of coins needed to meet a given total.
@@ -13,13 +17,15 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
+    # Initialize dp array with a large value (infinity)
     dp = [float('inf')] * (total + 1)
-    dp[0] = 0  # Base case: 0 coins are needed to make a total of 0
+    dp[0] = 0  # Base case: 0 coins needed to make total of 0
 
-    # Build up the dp array
+    # Update dp array for each coin
     for coin in coins:
         for amount in range(coin, total + 1):
             dp[amount] = min(dp[amount], dp[amount - coin] + 1)
 
-    # If dp[total] is still 'inf', the total cannot be met with given coins
+    # If total is not reachable, return -1
     return dp[total] if dp[total] != float('inf') else -1
+
